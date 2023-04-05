@@ -1,5 +1,6 @@
 FROM python:3.11
 LABEL maintainer="Luke Tainton <luke@tainton.uk>"
+LABEL org.opencontainers.image.source="https://github.com/luketainton/roboluke-tasks"
 USER root
 
 ENV PYTHONPATH="/run:/usr/local/lib/python3.11/lib-dynload:/usr/local/lib/python3.11/site-packages:/usr/local/lib/python3.11"
