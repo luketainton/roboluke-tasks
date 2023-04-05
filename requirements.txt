@@ -3,7 +3,7 @@ backoff==2.1.2
 certifi==2022.6.15
 charset-normalizer==2.1.0
 coloredlogs==15.0.1
-future==0.18.2
+future==0.18.3
 humanfriendly==10.0
 idna==3.3
 pycodestyle==2.9.1
