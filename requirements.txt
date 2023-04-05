@@ -1,7 +1,7 @@
 appdirs==1.4.4
 backoff==2.1.2
 certifi==2022.12.7
-charset-normalizer==2.1.0
+charset-normalizer==2.1.1
 coloredlogs==15.0.1
 future==0.18.3
 humanfriendly==10.0
