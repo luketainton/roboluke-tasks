@@ -13,8 +13,8 @@ jobs:
     - name: Login to GitHub Container Registry
       run: echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u luketainton --password-stdin
     - name: Build image for GitHub Package Registry
-      run: docker build . --file Dockerfile --tag ghcr.io/luketainton/roboluke-tasks:${{ GITHUB_SHA }} --tag ghcr.io/luketainton/roboluke-tasks:latest
+      run: docker build . --file Dockerfile --tag ghcr.io/luketainton/roboluke-tasks:${{ env.GITHUB_SHA }} --tag ghcr.io/luketainton/roboluke-tasks:latest
     - name: Push image to GitHub Package Registry
       run: |
         docker push ghcr.io/luketainton/roboluke-tasks:latest
-        docker push ghcr.io/luketainton/roboluke-tasks:${{ GITHUB_SHA }}
+        docker push ghcr.io/luketainton/roboluke-tasks:${{ env.GITHUB_SHA }}
