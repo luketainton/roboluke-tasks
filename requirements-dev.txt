@@ -2,4 +2,5 @@ black
 coverage
 isort
 pylint
+pylint-exit
 pytest
