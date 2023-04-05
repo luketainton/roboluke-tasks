@@ -1,0 +1,18 @@
+name: CI
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    types: [opened, synchronize, reopened]
+    paths-ignore:
+      - 'README.md'
+      - 'LICENSE.md'
+      - '.gitignore'
+      - 'CODEOWNERS'
+      - 'renovate.json'
+
+jobs:
+  ci:
+    uses: luketainton/gha-workflows/.github/workflows/ci-python.yml@main
+    secrets:
+      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
