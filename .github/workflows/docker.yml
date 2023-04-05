@@ -2,7 +2,8 @@ name: Build
 on:
   push:
     branches: [ main ]
-      
+
+jobs: 
   build:
     name: GitHub Container Registry
     runs-on: ubuntu-latest
