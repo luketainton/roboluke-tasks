@@ -1,6 +1,6 @@
 appdirs==1.4.4
 astroid==2.15.2
-attrs==22.2.0
+attrs==23.1.0
 autopep8==2.0.2
 backoff==2.2.1
 certifi==2022.12.7
