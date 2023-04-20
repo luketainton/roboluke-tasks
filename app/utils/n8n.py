@@ -16,7 +16,6 @@ def __n8n_post(data: dict) -> bool:
 
 
 def submit_task(summary, description, completion_date, requestor) -> bool:
-    print(f"submit_task: {completion_date=}")
     data: dict = {
         "requestor": requestor,
         "title": summary,
@@ -24,3 +23,15 @@ def submit_task(summary, description, completion_date, requestor) -> bool:
         "completiondate": completion_date,
     }
     return __n8n_post(data=data)
+
+
+def get_tasks(requestor) -> bool:
+    headers: dict = {"Content-Type": "application/json"}
+    resp: requests.Response = requests.get(
+        url=config.n8n_webhook_url,
+        headers=headers,
+        timeout=10,
+        verify=False,
+        params={"requestor": requestor},
+    )
+    return bool(resp.status_code == 200)

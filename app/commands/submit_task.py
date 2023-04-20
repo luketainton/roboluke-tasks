@@ -17,7 +17,7 @@ from webexteamssdk.models.cards import (
 from webexteamssdk.models.cards.actions import Submit
 
 from app.utils.config import config
-from app.utils.n8n import submit_task
+from app.utils.n8n import submit_task, get_tasks
 
 log: logging.Logger = logging.getLogger(__name__)
 
@@ -27,7 +27,7 @@ class SubmitTaskCommand(Command):
         super().__init__(
             command_keyword="submit_feedback_dstgmyn",
             help_message="Submit Task",
-            chained_commands=[SubmitTaskCallback()],
+            chained_commands=[SubmitTaskCallback(), MyTasksCallback()],
             delete_previous_message=True,
         )
         self.sender: str = ""
@@ -36,7 +36,6 @@ class SubmitTaskCommand(Command):
         self.sender = activity.get("actor").get("id")
 
     def execute(self, message, attachment_actions, activity) -> Response:
-
         card_body: list = [
             ColumnSet(
                 columns=[
@@ -104,6 +103,13 @@ class SubmitTaskCommand(Command):
                         "sender": self.sender,
                     },
                 ),
+                Submit(
+                    title="My Tasks",
+                    data={
+                        "callback_keyword": "my_tasks_callback_rbamzfyx",
+                        "sender": self.sender,
+                    },
+                ),
                 Submit(title="Cancel", data={"command_keyword": "exit"}),
             ],
         )
@@ -142,3 +148,21 @@ class SubmitTaskCallback(Command):
 
     def execute(self, message, attachment_actions, activity) -> str:
         return self.msg
+
+
+class MyTasksCallback(Command):
+    def __init__(self) -> None:
+        super().__init__(
+            card_callback_keyword="my_tasks_callback_rbamzfyx", delete_previous_message=True
+        )
+        self.msg: str = ""
+
+    def pre_execute(self, message, attachment_actions, activity) -> str:
+        return "Getting your tasks..."
+
+    def execute(self, message, attachment_actions, activity) -> str | None:
+        sender: str = attachment_actions.inputs.get("sender")
+        result: bool = get_tasks(requestor=sender)
+        if not result:
+            return "Failed to get tasks. Please try again."
+        return
