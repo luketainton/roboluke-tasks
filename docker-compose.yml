@@ -6,4 +6,5 @@ services:
       context: .
       dockerfile: Dockerfile
     restart: unless-stopped
+    env: stack.env
 ...
