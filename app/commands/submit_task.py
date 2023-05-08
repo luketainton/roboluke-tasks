@@ -17,7 +17,7 @@ from webexteamssdk.models.cards import (
 from webexteamssdk.models.cards.actions import Submit
 
 from app.utils.config import config
-from app.utils.n8n import submit_task, get_tasks
+from app.utils.n8n import get_tasks, submit_task
 
 log: logging.Logger = logging.getLogger(__name__)
 
@@ -47,7 +47,7 @@ class SubmitTaskCommand(Command):
                                 size=FontSize.MEDIUM,
                             ),
                             TextBlock(
-                                f"Add a task to {config.admin_first_name}'s To Do list. All fields are required.",
+                                f"Add a task to {config.admin_first_name}'s To Do list. All fields are required. Please don't use special characters.",
                                 wrap=True,
                                 isSubtle=True,
                             ),
