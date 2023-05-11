@@ -103,13 +103,13 @@ class SubmitTaskCommand(Command):
                         "sender": self.sender,
                     },
                 ),
-                Submit(
-                    title="My Tasks",
-                    data={
-                        "callback_keyword": "my_tasks_callback_rbamzfyx",
-                        "sender": self.sender,
-                    },
-                ),
+#                Submit(
+#                    title="My Tasks",
+ #                   data={
+  #                      "callback_keyword": "my_tasks_callback_rbamzfyx",
+   #                     "sender": self.sender,
+    #                },
+     #           ),
                 Submit(title="Cancel", data={"command_keyword": "exit"}),
             ],
         )
