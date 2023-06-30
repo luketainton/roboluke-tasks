@@ -104,7 +104,7 @@ class SubmitTaskCommand(Command):
                     },
                 ),
                 Submit(
-                    title="My Tasks",
+                    title="My Submitted Tasks",
                     data={
                         "callback_keyword": "my_tasks_callback_rbamzfyx",
                         "sender": self.sender,
