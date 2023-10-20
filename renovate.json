@@ -1,6 +1,11 @@
 {
   "extends": [
-    "config:base"
+    "config:base",
+    ":semanticCommits",
+    ":semanticCommitTypeAll(fix)"
+  ],
+  "baseBranches": [
+    "next"
   ],
   "platformCommit": true,
   "dependencyDashboardAutoclose": true,
