@@ -5,7 +5,7 @@ autopep8==2.0.4
 backoff==2.2.1
 certifi==2023.7.22
 cfgv==3.4.0
-charset-normalizer==3.3.1
+charset-normalizer==3.3.2
 click==8.1.7
 coloredlogs==15.0.1
 dill==0.3.7
