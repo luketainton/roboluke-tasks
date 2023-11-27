@@ -23,7 +23,7 @@ jobs:
           tag: ${{ steps.tag_version.outputs.new_tag }}
           name: ${{ steps.tag_version.outputs.new_tag }}
           body: ${{ steps.tag_version.outputs.changelog }}
-        
+
   publish:
     name: GitHub Container Registry
     runs-on: ubuntu-latest
@@ -42,10 +42,11 @@ jobs:
   deploy:
     name: Update Portainer Deployment
     runs-on: ubuntu-latest
+    needs: publish
     steps:
       - uses: fjogeleit/http-request-action@v1
         with:
           url: ${{ secrets.PORTAINER_WEBHOOK_URL }}
           method: POST
           timeout: 30000
-          preventFailureOnNoResponse: 'true'
+          preventFailureOnNoResponse: "true"
