@@ -9,7 +9,7 @@ charset-normalizer==3.3.2
 click==8.1.7
 coloredlogs==15.0.1
 dill==0.3.7
-distlib==0.3.7
+distlib==0.3.8
 filelock==3.13.1
 future==0.18.3
 humanfriendly==10.0
