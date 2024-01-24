@@ -6,8 +6,9 @@ on:
       - "README.md"
       - "LICENSE.md"
       - ".gitignore"
-      - "CODEOWNERS"
-      - "renovate.json"
+      - ".github/CODEOWNERS"
+      - ".github/renovate.json"
+      - ".github/dependabot.yml"
 
 jobs:
   pythonci:
