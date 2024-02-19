@@ -13,7 +13,7 @@ distlib==0.3.8
 filelock==3.13.1
 future==0.18.3
 humanfriendly==10.0
-identify==2.5.34
+identify==2.5.35
 idna==3.6
 iniconfig==2.0.0
 lazy-object-proxy==1.10.0
