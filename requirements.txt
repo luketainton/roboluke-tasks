@@ -10,7 +10,7 @@ click==8.1.7
 coloredlogs==15.0.1
 dill==0.3.8
 distlib==0.3.8
-filelock==3.13.1
+filelock==3.13.2
 future==1.0.0
 humanfriendly==10.0
 identify==2.5.35
