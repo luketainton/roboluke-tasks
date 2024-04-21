@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import logging
+import sentry_sdk
 
 from webex_bot.models.command import Command
 from webex_bot.models.response import Response, response_from_adaptive_card
@@ -113,7 +114,8 @@ class SubmitTaskCommand(Command):
                 Submit(title="Cancel", data={"command_keyword": "exit"}),
             ],
         )
-        return response_from_adaptive_card(card)
+        with sentry_sdk.start_transaction(name="submit_task_command"):
+            return response_from_adaptive_card(card)
 
 
 class SubmitTaskCallback(Command):
@@ -147,7 +149,8 @@ class SubmitTaskCallback(Command):
         )
 
     def execute(self, message, attachment_actions, activity) -> str:
-        return self.msg
+        with sentry_sdk.start_transaction(name="submit_task_callback"):
+            return self.msg
 
 
 class MyTasksCallback(Command):
@@ -158,11 +161,13 @@ class MyTasksCallback(Command):
         self.msg: str = ""
 
     def pre_execute(self, message, attachment_actions, activity) -> str:
-        return "Getting your tasks..."
+        with sentry_sdk.start_transaction(name="my_tasks_preexec"):
+            return "Getting your tasks..."
 
     def execute(self, message, attachment_actions, activity) -> str | None:
         sender: str = attachment_actions.inputs.get("sender")
         result: bool = get_tasks(requestor=sender)
-        if not result:
-            return "Failed to get tasks. Please try again."
-        return
+        with sentry_sdk.start_transaction(name="my_tasks_exec"):
+            if not result:
+                return "Failed to get tasks. Please try again."
+            return
