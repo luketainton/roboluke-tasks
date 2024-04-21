@@ -21,7 +21,7 @@ if config.sentry_enabled:
 
 
 def create_bot() -> WebexBot:
-    # Create a Bot Object
+    """Create and return a Webex Bot object."""
     webex_bot: WebexBot = WebexBot(
         bot_name=config.bot_name,
         teams_bot_token=config.webex_token,
