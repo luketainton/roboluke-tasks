@@ -12,7 +12,7 @@ class Config:
         self.__admin_emails: list = os.environ["ADMIN_EMAIL"].split(",")
         self.__n8n_webhook_url: str = os.environ["N8N_WEBHOOK_URL"]
         self.__sentry_dsn: str = os.environ.get("SENTRY_DSN", "")
-        self.__sentry_enabled: bool = True if (os.environ.get("SENTRY_ENABLED").upper() == "TRUE" and self.__sentry_dsn != "") else False
+        self.__sentry_enabled: bool = True if (os.environ.get("SENTRY_ENABLED", "False").upper() == "TRUE" and self.__sentry_dsn != "") else False
 
     @property
     def environment(self) -> str:
