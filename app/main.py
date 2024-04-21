@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 
+import sentry_sdk
+from sentry_sdk.integrations.stdlib import StdlibIntegration
+
 from webex_bot.webex_bot import WebexBot
 
 from app.commands.exit import ExitCommand
@@ -7,8 +10,18 @@ from app.commands.submit_task import SubmitTaskCommand
 from app.utils.config import config
 
 
+if config.sentry_enabled:
+    apm = sentry_sdk.init(
+        dsn=config.sentry_dsn,
+        enable_tracing=True,
+        environment=config.environment,
+        integrations=[StdlibIntegration()],
+        spotlight=True
+    )
+
+
 def create_bot() -> WebexBot:
-    # Create a Bot Object
+    """Create and return a Webex Bot object."""
     webex_bot: WebexBot = WebexBot(
         bot_name=config.bot_name,
         teams_bot_token=config.webex_token,

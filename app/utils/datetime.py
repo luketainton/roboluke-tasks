@@ -1,7 +1,18 @@
 #!/usr/bin/env python3
 
+from zoneinfo import ZoneInfo
+
 from datetime import datetime
 
 
 def timestamp_to_date(timestamp: int) -> str:
-    return datetime.utcfromtimestamp(timestamp).strftime("%Y-%m-%d")
+    """Convert timestamp to date.
+    
+    Args:
+        timestamp (int): Timestamp to convert.
+    
+    Returns:
+        str: Date in the format YYYY-MM-DD.
+    """
+    return datetime.fromtimestamp(timestamp=timestamp, tz=ZoneInfo("UTC")).strftime("%Y-%m-%d")
+

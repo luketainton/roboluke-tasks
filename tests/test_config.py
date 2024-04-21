@@ -11,6 +11,8 @@ vars: dict = {
     "ADMIN_FIRST_NAME": "Test",
     "ADMIN_EMAIL": "test@test.com",
     "N8N_WEBHOOK_URL": "https://n8n.test.com/webhook/abcdefg",
+    "SENTRY_ENABLED": "false",
+    "SENTRY_DSN": "http://localhost"
 }
 
 
