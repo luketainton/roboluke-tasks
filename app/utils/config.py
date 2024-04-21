@@ -8,6 +8,7 @@ class Config:
     def __init__(self) -> None:
         """Configuration module."""
         self.__environment: str = os.environ.get("APP_LIFECYCLE", "DEV").upper()
+        self.__version: str = os.environ["APP_VERSION"]
         self.__bot_name: str = os.environ["BOT_NAME"]
         self.__webex_token: str = os.environ["WEBEX_API_KEY"]
         self.__admin_first_name: str = os.environ["ADMIN_FIRST_NAME"]
@@ -23,6 +24,11 @@ class Config:
     def environment(self) -> str:
         """Returns the current app lifecycle."""
         return self.__environment
+
+    @property
+    def version(self) -> str:
+        """Returns the current app version."""
+        return self.__version
 
     @property
     def sentry_enabled(self) -> bool:

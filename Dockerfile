@@ -15,4 +15,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 ENTRYPOINT ["python3", "-B", "-m", "app.main"]
 
+ARG version="dev"
+ENV APP_VERSION=$version
+
 COPY app /run/app
