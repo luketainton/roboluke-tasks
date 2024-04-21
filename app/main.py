@@ -15,6 +15,7 @@ if config.sentry_enabled:
         dsn=config.sentry_dsn,
         enable_tracing=True,
         environment=config.environment,
+        release=config.version,
         integrations=[StdlibIntegration()],
         spotlight=True
     )
