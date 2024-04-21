@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-import pytz
+from zoneinfo import ZoneInfo
 
 from datetime import datetime
 
@@ -14,5 +14,5 @@ def timestamp_to_date(timestamp: int) -> str:
     Returns:
         str: Date in the format YYYY-MM-DD.
     """
-    return datetime.fromtimestamp(timestamp=timestamp, tz=pytz.utc).strftime("%Y-%m-%d")
+    return datetime.fromtimestamp(timestamp=timestamp, tz=ZoneInfo("UTC")).strftime("%Y-%m-%d")
 
