@@ -6,6 +6,7 @@ import os
 
 
 vars: dict = {
+    "APP_VERSION": "dev",
     "BOT_NAME": "TestBot",
     "WEBEX_API_KEY": "testing",
     "ADMIN_FIRST_NAME": "Test",
