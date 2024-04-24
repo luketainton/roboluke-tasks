@@ -42,6 +42,6 @@ urllib3==2.2.1
 virtualenv==20.26.0
 webex-bot==0.4.7
 webexteamssdk==1.6.1
-websockets==10.2
+websockets==11.0.3
 wrapt==1.16.0
 xmltodict==0.13.0
