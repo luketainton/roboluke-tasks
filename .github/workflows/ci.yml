@@ -11,14 +11,8 @@ on:
       - ".github/dependabot.yml"
 
 jobs:
-  pythonci:
-    uses: luketainton/gha-workflows/.github/workflows/ci-python.yml@main
-    secrets:
-      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-  
-  dockerci:
-    uses: luketainton/gha-workflows/.github/workflows/ci-docker.yml@main
+  ci:
+    uses: luketainton/gha-workflows/.github/workflows/ci-python-with-docker.yml@main
     secrets:
       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
