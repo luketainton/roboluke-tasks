@@ -39,7 +39,7 @@ toml==0.10.2
 tomli==2.0.1
 tomlkit==0.12.4
 urllib3==2.2.1
-virtualenv==20.26.0
+virtualenv==20.26.1
 webex-bot==0.5.1
 webexteamssdk==1.6.1
 websockets==11.0.3
