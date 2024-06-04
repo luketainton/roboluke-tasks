@@ -1,4 +1,4 @@
-FROM python:3.11-slim
+FROM python:3.12-slim
 LABEL maintainer="Luke Tainton <luke@tainton.uk>"
 LABEL org.opencontainers.image.source="https://github.com/luketainton/roboluke-tasks"
 USER root
