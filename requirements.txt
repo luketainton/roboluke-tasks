@@ -37,7 +37,7 @@ sentry-sdk==2.7.1
 six==1.16.0
 toml==0.10.2
 tomli==2.0.1
-tomlkit==0.12.5
+tomlkit==0.13.0
 urllib3==2.2.2
 virtualenv==20.26.3
 webex-bot==0.5.1
