@@ -1,0 +1,17 @@
+name: Release
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 9 * * *"
+
+jobs:
+  create_release:
+    name: Create Release
+    uses: luketainton/gha-workflows/.github/workflows/create-release.yml@main
+
+  create_docker:
+    name: Create Docker Image
+    needs: create_release
+    uses: luketainton/gha-workflows/.github/workflows/build-push-attest-docker.yml@main
+    with:
+        release: ${{ needs.create_release.outputs.release_name }}
