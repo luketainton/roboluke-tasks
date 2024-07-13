@@ -28,7 +28,12 @@ jobs:
           body: ${{ steps.tag_version.outputs.changelog }}
           generateReleaseNotes: true
 
+  create_docker:
+    name: Create Docker Image
+    runs-on: ubuntu-latest
+    needs: create_release
+    steps:
       - name: Create Docker Image
         uses: luketainton/roboluke-tasks/.github/workflows/docker_publish.yml@main
         with:
-          release: ${{ steps.tag_version.outputs.new_tag }}
+          release: ${{ needs.create_release.outputs.new_tag }}
