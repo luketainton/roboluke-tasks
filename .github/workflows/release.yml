@@ -44,14 +44,14 @@ jobs:
           docker push ghcr.io/luketainton/roboluke-tasks:latest
           docker push ghcr.io/luketainton/roboluke-tasks:${{ needs.release.outputs.new_tag }}
 
-  deploy:
-    name: Update Portainer Deployment
-    runs-on: ubuntu-latest
-    needs: publish
-    steps:
-      - uses: fjogeleit/http-request-action@v1
-        with:
-          url: ${{ secrets.PORTAINER_WEBHOOK_URL }}
-          method: POST
-          timeout: 60000
-          preventFailureOnNoResponse: "true"
+  # deploy:
+  #   name: Update Portainer Deployment
+  #   runs-on: ubuntu-latest
+  #   needs: publish
+  #   steps:
+  #     - uses: fjogeleit/http-request-action@v1
+  #       with:
+  #         url: ${{ secrets.PORTAINER_WEBHOOK_URL }}
+  #         method: POST
+  #         timeout: 60000
+  #         preventFailureOnNoResponse: "true"
