@@ -1,9 +1,11 @@
 name: Publish Docker Image
 
 on:
-  workflow_dispatch:
-  release:
-    types: [published, created]
+  workflow_call:
+    inputs:
+      release:
+        required: true
+        type: string
 
 jobs:
   publish:
@@ -18,7 +20,7 @@ jobs:
       - name: Check out the repo
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.release.name }}
+          ref: ${{ inputs.release }}
 
       - name: Log in to GitHub Container Registry
         uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
@@ -33,7 +35,7 @@ jobs:
         with:
           images: |
             ghcr.io/${{ github.repository }}:latest
-            ghcr.io/${{ github.repository }}:${{ github.event.release.name }}
+            ghcr.io/${{ github.repository }}:${{ inputs.release }}
 
       - name: Build and push Docker image
         id: push
@@ -43,12 +45,12 @@ jobs:
           push: true
           tags: |
             ghcr.io/${{ github.repository }}:latest
-            ghcr.io/${{ github.repository }}:${{ github.event.release.name }}
+            ghcr.io/${{ github.repository }}:${{ inputs.release }}
           labels: ${{ steps.meta.outputs.labels }}
 
       - name: Generate artifact attestation
         uses: actions/attest-build-provenance@v1
         with:
-          subject-name: ghcr.io/${{ github.repository }}:${{ github.event.release.name }}
+          subject-name: ghcr.io/${{ github.repository }}:${{ inputs.release }}
           subject-digest: ${{ steps.push.outputs.digest }}
           push-to-registry: true
