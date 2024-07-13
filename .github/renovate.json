@@ -5,7 +5,7 @@
     ":semanticCommitTypeAll(fix)"
   ],
   "baseBranches": [
-    "next"
+    "main"
   ],
   "platformCommit": true,
   "dependencyDashboardAutoclose": true,
