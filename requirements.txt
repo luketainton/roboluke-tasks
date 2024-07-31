@@ -41,7 +41,7 @@ tomlkit==0.13.0
 urllib3==2.2.2
 virtualenv==20.26.3
 webex-bot==0.5.1
-webexteamssdk==1.6.1
+webexteamssdk==1.7
 websockets==11.0.3
 wrapt==1.16.0
 xmltodict==0.13.0
