@@ -1,47 +1,47 @@
 {
+  "assignAutomerge": true,
+  "assigneesFromCodeOwners": true,
+  "baseBranches": [
+    "main"
+  ],
+  "dependencyDashboardAutoclose": true,
   "extends": [
     "config:base",
     ":semanticCommits",
     ":semanticCommitTypeAll(fix)"
   ],
-  "baseBranches": [
-    "main"
-  ],
-  "platformCommit": true,
-  "dependencyDashboardAutoclose": true,
-  "assignAutomerge": true,
-  "assigneesFromCodeOwners": true,
-  "rebaseWhen": "behind-base-branch",
-  "rollbackPrs": true,
   "labels": [
     "dependencies"
   ],
   "packageRules": [
     {
+      "labels": [
+        "linting"
+      ],
       "matchPackagePatterns": [
         "black",
         "pylint"
-      ],
-      "labels": [
-        "linting"
       ]
     },
     {
+      "labels": [
+        "unit-tests"
+      ],
       "matchPackagePatterns": [
         "coverage",
         "pytest"
-      ],
-      "labels": [
-        "unit-tests"
       ]
     }
   ],
+  "platformCommit": true,
+  "rebaseWhen": "behind-base-branch",
+  "rollbackPrs": true,
   "vulnerabilityAlerts": {
+    "commitMessagePrefix": "[SECURITY] ",
     "enabled": true,
     "labels": [
       "security"
     ],
-    "commitMessagePrefix": "[SECURITY] ",
     "prCreation": "immediate"
   }
 }
