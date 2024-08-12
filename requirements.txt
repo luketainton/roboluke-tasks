@@ -1,5 +1,5 @@
 appdirs==1.4.4
-astroid==3.3.1
+astroid==3.3.2
 attrs==24.2.0
 autopep8==2.3.1
 backoff==2.2.1
