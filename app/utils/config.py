@@ -2,9 +2,12 @@
 
 import os
 
+from app.utils.helpers import validate_email_syntax
+
 
 class Config:
     """Configuration module."""
+
     def __init__(self) -> None:
         """Configuration module."""
         self.__environment: str = os.environ.get("APP_LIFECYCLE", "DEV").upper()
@@ -67,6 +70,25 @@ class Config:
     def n8n_webhook_url(self) -> str:
         """Returns the n8n webhook URL."""
         return self.__n8n_webhook_url
+
+    @property
+    def approved_users(self) -> list:
+        """Returns a list of approved users."""
+        emails: list[str] = os.environ.get("APPROVED_USERS", "").split(",")
+        emails = [i.strip() for i in emails if validate_email_syntax(i.strip())]
+        return emails
+
+    @property
+    def approved_rooms(self) -> list:
+        """Returns a list of approved rooms."""
+        rooms: list[str] = os.environ.get("APPROVED_ROOMS", "").split(",")
+        return [i.strip() for i in rooms]
+
+    @property
+    def approved_domains(self) -> list:
+        """Returns a list of approved domains."""
+        domains: list[str] = os.environ.get("APPROVED_DOMAINS", "").split(",")
+        return [i.strip() for i in domains]
 
 
 config: Config = Config()
