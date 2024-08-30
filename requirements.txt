@@ -3,7 +3,7 @@ astroid==3.3.2
 attrs==24.2.0
 autopep8==2.3.1
 backoff==2.2.1
-certifi==2024.7.4
+certifi==2024.8.30
 cfgv==3.4.0
 charset-normalizer==3.3.2
 click==8.1.7
