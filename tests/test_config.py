@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+# ruff: noqa: E402 pylint: disable=wrong-import-position
+
 """Provides test cases for app/utils/config.py."""
 
 import os
@@ -23,7 +25,7 @@ for var, value in vars.items():
     os.environ[var] = value
 
 # needs to be imported AFTER environment variables are set
-from app.utils.config import config  # pragma: no cover  # noqa: E402
+from app.utils.config import config  # pragma: no cover
 
 
 def test_config() -> None:
