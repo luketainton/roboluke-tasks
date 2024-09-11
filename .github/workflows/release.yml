@@ -1,57 +1,18 @@
-name: Build
+name: Release
 on:
-  push:
-    branches: [main]
+  workflow_dispatch:
+  schedule:
+    - cron: "0 9 * * 0"
 
 jobs:
-  release:
-    name: Release
-    runs-on: ubuntu-latest
-    outputs:
-      new_tag: ${{ steps.tag_version.outputs.new_tag }}
-    steps:
-      - uses: actions/checkout@v4
-      - name: Bump version and push tag
-        id: tag_version
-        uses: mathieudutour/github-tag-action@v6.2
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          default_bump: minor
-      - name: Create a GitHub release
-        uses: ncipollo/release-action@v1
-        with:
-          tag: ${{ steps.tag_version.outputs.new_tag }}
-          name: ${{ steps.tag_version.outputs.new_tag }}
-          body: ${{ steps.tag_version.outputs.changelog }}
-          generateReleaseNotes: true
+  create_release:
+    name: Create Release
+    uses: luketainton/gha-workflows/.github/workflows/create-release.yml@main
 
-  publish:
-    name: GitHub Container Registry
-    runs-on: ubuntu-latest
-    needs: release
-    steps:
-      - uses: actions/checkout@v4
-      - name: Login to GitHub Container Registry
-        run: echo ${{ secrets.GHCR_ACCESS_TOKEN }} | docker login ghcr.io -u luketainton --password-stdin
-      - name: Build image for GitHub Package Registry
-        run: |
-          docker build . --file Dockerfile \
-          --build-arg "version=${{ needs.release.outputs.new_tag }}" \
-          --tag ghcr.io/luketainton/roboluke-tasks:${{ needs.release.outputs.new_tag }} \
-          --tag ghcr.io/luketainton/roboluke-tasks:latest
-      - name: Push image to GitHub Package Registry
-        run: |
-          docker push ghcr.io/luketainton/roboluke-tasks:latest
-          docker push ghcr.io/luketainton/roboluke-tasks:${{ needs.release.outputs.new_tag }}
-
-  deploy:
-    name: Update Portainer Deployment
-    runs-on: ubuntu-latest
-    needs: publish
-    steps:
-      - uses: fjogeleit/http-request-action@v1
-        with:
-          url: ${{ secrets.PORTAINER_WEBHOOK_URL }}
-          method: POST
-          timeout: 60000
-          preventFailureOnNoResponse: "true"
+  create_docker:
+    name: Create Docker Image
+    needs: create_release
+    if: ${{ needs.create_release.outputs.success == 'true' }}
+    uses: luketainton/gha-workflows/.github/workflows/build-push-attest-docker.yml@main
+    with:
+        release: ${{ needs.create_release.outputs.release_name }}
