@@ -44,5 +44,5 @@ webex-bot==0.5.2
 webexteamssdk==1.6.1
 websockets==11.0.3
 wrapt==1.16.0
-xmltodict==0.14.0
+xmltodict==0.14.1
 zipp>=3.19.1 # not directly required, pinned by Snyk to avoid a vulnerability
