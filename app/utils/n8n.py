@@ -1,3 +1,5 @@
+"""N8N utils module."""
+
 import requests
 import sentry_sdk
 
