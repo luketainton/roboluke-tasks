@@ -8,12 +8,14 @@ from app.utils.datetime import timestamp_to_date  # pragma: no cover
 
 
 def test_correct() -> None:
+    """Test timestamp_to_date() with a correct timestamp."""
     timestamp: int = 1680722218
     result: str = timestamp_to_date(timestamp)
     assert result == "2023-04-05"
 
 
 def test_invalid() -> None:
+    """Test timestamp_to_date() with an invalid timestamp."""
     timestamp: str = "hello"
     with pytest.raises(TypeError) as excinfo:
         timestamp_to_date(timestamp)

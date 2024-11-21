@@ -1,4 +1,6 @@
-#!/usr/bin/env python3
+"""Main module."""
+
+import sys
 
 import sentry_sdk
 from sentry_sdk.integrations.stdlib import StdlibIntegration
@@ -43,4 +45,4 @@ if __name__ == "__main__":
         bot.run()
     except KeyboardInterrupt:
         print("Shutting down bot...")
-        exit()
+        sys.exit(0)
