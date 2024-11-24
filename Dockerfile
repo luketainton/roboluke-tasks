@@ -12,7 +12,9 @@ RUN mkdir -p /.local && \
 
 COPY pyproject.toml /run/pyproject.toml
 COPY poetry.lock /run/poetry.lock
-RUN poetry install --without dev
+
+RUN poetry config virtualenvs.create false && \
+    poetry install --without dev
 
 ENTRYPOINT ["python3", "-B", "-m", "app.main"]
 
