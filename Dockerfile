@@ -8,10 +8,11 @@ WORKDIR /run
 
 RUN mkdir -p /.local && \
     chmod -R 777 /.local && \
-    pip install -U pip
+    pip install -U pip poetry
 
-COPY requirements.txt /run/requirements.txt
-RUN pip install --no-cache-dir -r requirements.txt
+COPY pyproject.toml /run/pyproject.toml
+COPY poetry.lock /run/poetry.lock
+RUN poetry install --withouit dev --no-root
 
 ENTRYPOINT ["python3", "-B", "-m", "app.main"]
 
