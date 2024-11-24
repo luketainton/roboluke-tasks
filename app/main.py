@@ -2,7 +2,6 @@
 
 import sys
 
-import sentry_sdk
 from sentry_sdk.integrations.stdlib import StdlibIntegration
 from webex_bot.webex_bot import WebexBot
 
@@ -11,6 +10,8 @@ from app.commands.submit_task import SubmitTaskCommand
 from app.utils.config import config
 
 if config.sentry_enabled:
+    import sentry_sdk
+
     apm = sentry_sdk.init(
         dsn=config.sentry_dsn,
         enable_tracing=True,

@@ -2,17 +2,27 @@
 
 import logging
 
-import sentry_sdk
 from webex_bot.models.command import Command
 from webex_bot.models.response import Response, response_from_adaptive_card
-from webexteamssdk.models.cards import (AdaptiveCard, Column, ColumnSet, Date,
-                                        FontSize, FontWeight, Text, TextBlock)
+from webexteamssdk.models.cards import (
+    AdaptiveCard,
+    Column,
+    ColumnSet,
+    Date,
+    FontSize,
+    FontWeight,
+    Text,
+    TextBlock,
+)
 from webexteamssdk.models.cards.actions import Submit
 
 from app.utils.config import config
 from app.utils.n8n import get_tasks, submit_task
 
 log: logging.Logger = logging.getLogger(__name__)
+
+if config.sentry_enabled:
+    import sentry_sdk
 
 
 class SubmitTaskCommand(Command):
@@ -115,8 +125,11 @@ class SubmitTaskCommand(Command):
                 Submit(title="Cancel", data={"command_keyword": "exit"}),
             ],
         )
+        _result = response_from_adaptive_card(card)
+        if not config.sentry_enabled:
+            return _result
         with sentry_sdk.start_transaction(name="submit_task_command"):
-            return response_from_adaptive_card(card)
+            return _result
 
 
 class SubmitTaskCallback(Command):
@@ -160,6 +173,8 @@ class SubmitTaskCallback(Command):
 
     def execute(self, message, attachment_actions, activity) -> str:
         """Execute method."""
+        if not config.sentry_enabled:
+            return self.msg
         with sentry_sdk.start_transaction(name="submit_task_callback"):
             return self.msg
 
@@ -177,14 +192,22 @@ class MyTasksCallback(Command):
 
     def pre_execute(self, message, attachment_actions, activity) -> str:
         """Pre-execute method."""
+        _msg: str = "Getting your tasks..."
+        if not config.sentry_enabled:
+            return _msg
         with sentry_sdk.start_transaction(name="my_tasks_preexec"):
-            return "Getting your tasks..."
+            return _msg
 
     def execute(self, message, attachment_actions, activity) -> str | None:
         """Execute method."""
         sender: str = attachment_actions.inputs.get("sender")
         result: bool = get_tasks(requestor=sender)
+        _msg: str = "Failed to get tasks. Please try again."
+        if not config.sentry_enabled:
+            if not result:
+                return _msg
+            return None
         with sentry_sdk.start_transaction(name="my_tasks_exec"):
             if not result:
-                return "Failed to get tasks. Please try again."
+                return _msg
             return None
