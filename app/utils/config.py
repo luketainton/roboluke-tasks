@@ -47,31 +47,27 @@ class Config:
         return os.environ["N8N_WEBHOOK_URL"]
 
     @property
-    def approved_users(self) -> list | None:
+    def approved_users(self) -> list:
         """Returns a list of approved users."""
         _emails: list[str] = os.environ.get("APPROVED_USERS", "").split(",")
         _emails: list[str] = [i.strip() for i in _emails if i]
         if not _emails:
-            return None
+            return []
         emails = [i for i in _emails if validate_email_syntax(i)]
         return emails
 
     @property
-    def approved_rooms(self) -> list | None:
+    def approved_rooms(self) -> list:
         """Returns a list of approved rooms."""
         _rooms: list[str] = os.environ.get("APPROVED_ROOMS", "").split(",")
         rooms: list[str] = [i.strip() for i in _rooms if i]
-        if not rooms:
-            return None
         return rooms
 
     @property
-    def approved_domains(self) -> list | None:
+    def approved_domains(self) -> list:
         """Returns a list of approved domains."""
         _domains: list[str] = os.environ.get("APPROVED_DOMAINS", "").split(",")
         domains: list[str] = [i.strip() for i in _domains if i]
-        if not domains:
-            return None
         return domains
 
 
