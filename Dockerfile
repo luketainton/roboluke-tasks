@@ -12,7 +12,7 @@ RUN mkdir -p /.local && \
 
 COPY pyproject.toml /run/pyproject.toml
 COPY poetry.lock /run/poetry.lock
-RUN poetry install --withouit dev --no-root
+RUN poetry install --without dev --no-root
 
 ENTRYPOINT ["python3", "-B", "-m", "app.main"]
 
