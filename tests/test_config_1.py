@@ -17,8 +17,6 @@ def test_config() -> None:
         "ADMIN_FIRST_NAME": "Test",
         "ADMIN_EMAIL": "test@test.com",
         "N8N_WEBHOOK_URL": "https://n8n.test.com/webhook/abcdefg",
-        "SENTRY_ENABLED": "false",
-        "SENTRY_DSN": "http://localhost",
         "APPROVED_USERS": "test@test.com",
         "APPROVED_DOMAINS": "test.com",
         "APPROVED_ROOMS": "test",
@@ -37,16 +35,8 @@ def test_config() -> None:
     assert config.approved_users == config_vars["APPROVED_USERS"].split(",")
     assert config.bot_name == config_vars["BOT_NAME"]
     assert config.n8n_webhook_url == config_vars["N8N_WEBHOOK_URL"]
-    assert config.sentry_enabled == bool(
-        config_vars["SENTRY_ENABLED"].upper() == "TRUE"
-    )
     assert config.version == config_vars["APP_VERSION"]
     assert config.webex_token == config_vars["WEBEX_API_KEY"]
-
-    if config.sentry_enabled:
-        assert config.sentry_dsn == config_vars["SENTRY_DSN"]
-    else:
-        assert config.sentry_dsn == ""
 
     for config_var in config_vars:
         os.environ.pop(config_var, None)

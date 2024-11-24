@@ -4,9 +4,6 @@ import requests
 
 from app.utils.config import config
 
-if config.sentry_enabled:
-    import sentry_sdk
-
 
 def __n8n_post(data: dict) -> bool:
     """Post data to N8N webhook URL.
@@ -46,12 +43,8 @@ def submit_task(summary, description, completion_date, requestor) -> bool:
         "description": description,
         "completiondate": completion_date,
     }
-    if not config.sentry_enabled:
-        _data = __n8n_post(data=data)
-        return _data
-    with sentry_sdk.start_transaction(name="submit_task"):
-        _data = __n8n_post(data=data)
-        return _data
+    _data = __n8n_post(data=data)
+    return _data
 
 
 def get_tasks(requestor) -> bool:
@@ -64,23 +57,12 @@ def get_tasks(requestor) -> bool:
         bool: True if successful, else False.
     """
     headers: dict = {"Content-Type": "application/json"}
-    if not config.sentry_enabled:
-        resp: requests.Response = requests.get(
-            url=config.n8n_webhook_url,
-            headers=headers,
-            timeout=10,
-            verify=False,
-            params={"requestor": requestor},
-        )
-        _data = bool(resp.status_code == 200)
-        return _data
-    with sentry_sdk.start_transaction(name="get_tasks"):
-        resp: requests.Response = requests.get(
-            url=config.n8n_webhook_url,
-            headers=headers,
-            timeout=10,
-            verify=False,
-            params={"requestor": requestor},
-        )
-        _data = bool(resp.status_code == 200)
-        return _data
+    resp: requests.Response = requests.get(
+        url=config.n8n_webhook_url,
+        headers=headers,
+        timeout=10,
+        verify=False,
+        params={"requestor": requestor},
+    )
+    _data = bool(resp.status_code == 200)
+    return _data

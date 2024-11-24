@@ -11,15 +11,6 @@ class Config:
     def __init__(self) -> None:
         """Configuration module."""
 
-        # Sentry config needs to be processed first for loop prevention.
-
-        self.__sentry_dsn: str = os.environ.get("SENTRY_DSN", "")
-
-        self.__sentry_enabled: bool = bool(
-            os.environ.get("SENTRY_ENABLED", "False").upper() == "TRUE"
-            and self.__sentry_dsn != ""
-        )
-
     @property
     def environment(self) -> str:
         """Returns the current app lifecycle."""
@@ -29,19 +20,6 @@ class Config:
     def version(self) -> str:
         """Returns the current app version."""
         return os.environ["APP_VERSION"]
-
-    @property
-    def sentry_enabled(self) -> bool:
-        """Returns True if Sentry SDK is enabled, else False."""
-        return self.__sentry_enabled
-
-    @property
-    def sentry_dsn(self) -> str:
-        """Returns the Sentry DSN value if Sentry SDK is enabled AND
-        Sentry DSN is set, else blank string."""
-        if not self.__sentry_enabled:
-            return ""
-        return self.__sentry_dsn
 
     @property
     def bot_name(self) -> str:
