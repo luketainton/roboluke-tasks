@@ -25,9 +25,9 @@ def test_config_no_admin_vars() -> None:
     # needs to be imported AFTER environment variables are set
     from app.utils.config import config  # pragma: no cover
 
-    assert config.approved_domains is None
-    assert config.approved_rooms is None
-    assert config.approved_users is None
+    assert config.approved_domains == []
+    assert config.approved_rooms == []
+    assert config.approved_users == []
     assert config.admin_emails == config_vars["ADMIN_EMAIL"].split(",")
     assert config.admin_first_name == config_vars["ADMIN_FIRST_NAME"]
     assert config.bot_name == config_vars["BOT_NAME"]
