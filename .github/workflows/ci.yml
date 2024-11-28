@@ -14,7 +14,7 @@ jobs:
   ci:
     uses: luketainton/gha-workflows/.github/workflows/ci-python-poetry-with-docker.yml@main
     with:
-      python_version: "3.13"
+      python-version: 3.13
     secrets:
       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
