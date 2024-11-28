@@ -1,0 +1,26 @@
+[tool.poetry]
+name = "roboluke-tasks"
+version = "0.0.0"  # Version is tracked by GitHub Releases
+description = "Add tasks to a Wekan to do list via Webex and n8n."
+authors = ["Luke Tainton <luke@tainton.uk>"]
+readme = "README.md"
+package-mode = false
+
+[tool.poetry.dependencies]
+python = "^3.11"
+webex-bot = "^0.5.2"
+datetime = "^5.5"
+requests = "^2.32.3"
+
+[tool.poetry.group.dev.dependencies]
+black = "^24.10.0"
+coverage = "^7.6.7"
+isort = "^5.13.2"
+pylint = "^3.3.1"
+pylint-exit = "^1.2.0"
+pytest = "^8.3.3"
+zipp = "^3.21.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

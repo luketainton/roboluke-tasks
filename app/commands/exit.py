@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+"""Exit command."""
 
 import logging
 
@@ -8,7 +8,10 @@ log: logging.Logger = logging.getLogger(__name__)
 
 
 class ExitCommand(Command):
+    """Exit command class."""
+
     def __init__(self) -> None:
+        """Exit command class."""
         super().__init__(
             command_keyword="exit",
             help_message="Exit",
@@ -17,10 +20,10 @@ class ExitCommand(Command):
         self.sender: str = ""
 
     def pre_execute(self, message, attachment_actions, activity) -> None:
-        pass
+        """Pre-execute method."""
 
     def execute(self, message, attachment_actions, activity) -> None:
-        pass
+        """Execute method."""
 
     def post_execute(self, message, attachment_actions, activity) -> None:
-        pass
+        """Post-execute method."""

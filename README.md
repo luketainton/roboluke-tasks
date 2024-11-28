@@ -9,6 +9,10 @@ Add tasks to a Wekan to do list via Webex and n8n.
 3. Edit `.env` as required:
     - `ADMIN_EMAIL` - comma-separated list of admin (who owns the to-do list) email addresses
     - `ADMIN_FIRST_NAME` - admin first name
+    - `APP_LIFECYCLE` - set the name of the environment
+    - `APPROVED_DOMAINS` - comma-separated list of domains that users are allowed to message the bot from
+    - `APPROVED_ROOMS` - comma-separated list of room IDs that users are allowed to message the bot from
+    - `APPROVED_USERS` - comma-separated list of email addresses of approved users
     - `BOT_NAME` - Webex bot name
     - `N8N_WEBHOOK_URL` - n8n webhook URL
     - `WEBEX_API_KEY` - Webex API key

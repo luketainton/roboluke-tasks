@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+"""Provides functions for converting timestamps to dates."""
 
 from datetime import datetime
 from zoneinfo import ZoneInfo

@@ -1,7 +1,6 @@
-#!/usr/bin/env python3
+"""Main module."""
 
-import sentry_sdk
-from sentry_sdk.integrations.stdlib import StdlibIntegration
+import sys
 
 from webex_bot.webex_bot import WebexBot
 
@@ -10,23 +9,14 @@ from app.commands.submit_task import SubmitTaskCommand
 from app.utils.config import config
 
 
-if config.sentry_enabled:
-    apm = sentry_sdk.init(
-        dsn=config.sentry_dsn,
-        enable_tracing=True,
-        environment=config.environment,
-        release=config.version,
-        integrations=[StdlibIntegration()],
-        spotlight=True
-    )
-
-
 def create_bot() -> WebexBot:
     """Create and return a Webex Bot object."""
     webex_bot: WebexBot = WebexBot(
         bot_name=config.bot_name,
         teams_bot_token=config.webex_token,
-        approved_domains=["cisco.com"],
+        approved_domains=config.approved_domains,
+        approved_rooms=config.approved_rooms,
+        approved_users=config.approved_users,
     )
     webex_bot.commands.clear()
     webex_bot.add_command(SubmitTaskCommand())
@@ -43,4 +33,4 @@ if __name__ == "__main__":
         bot.run()
     except KeyboardInterrupt:
         print("Shutting down bot...")
-        exit()
+        sys.exit(0)
