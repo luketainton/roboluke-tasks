@@ -6,52 +6,12 @@ on:
 
 jobs:
   test:
-    name: Test
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out repository code
-        uses: actions/checkout@v4.2.2
-        with:
-          fetch-depth: 0
-      - uses: hadolint/hadolint-action@v3.1.0
-        with:
-          dockerfile: Dockerfile
-          output-file: hadolint.out
-          format: sonarqube
-          no-fail: true
-      - name: Setup Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.11"
-      - name: Setup Poetry
-        uses: abatilo/actions-poetry@v3
-      - name: Install dependencies
-        run: poetry install
-      - name: Lint
-        run: |
-          poetry run pylint --fail-under=8 --recursive=yes --output-format=parseable --output=lintreport.txt .
-          cat lintreport.txt
-      - name: Unit Test
-        run: |
-          poetry run coverage run -m pytest -v --junitxml=testresults.xml
-          poetry run coverage xml
-          sed -i 's@${{ github.workspace }}@/github/workspace@g' coverage.xml
-      - name: SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      - name: Snyk Vulnerability Scan
-        uses: snyk/actions/python-3.10@master
-        continue-on-error: true # To make sure that SARIF upload gets called
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        with:
-          args: --sarif-file-output=snyk.sarif --all-projects
-      - name: Upload result to GitHub Code Scanning
-        uses: github/codeql-action/upload-sarif@v3
-        with:
-          sarif_file: snyk.sarif
+    uses: luketainton/gha-workflows/.github/workflows/ci-python-poetry-with-docker.yml@main
+    with:
+      python_version: "3.13"
+    secrets:
+      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
   create_release:
     name: Create Release
