@@ -1,20 +1,22 @@
 FROM python:3.13-slim
 LABEL maintainer="Luke Tainton <luke@tainton.uk>"
-LABEL org.opencontainers.image.source="https://github.com/luketainton/roboluke-tasks"
 USER root
 
 ENV PYTHONPATH="/run:/usr/local/lib/python3.11/lib-dynload:/usr/local/lib/python3.11/site-packages:/usr/local/lib/python3.11"
+ENV UV_PROJECT_ENVIRONMENT="/usr/local/"
+
 WORKDIR /run
 
 RUN mkdir -p /.local && \
     chmod -R 777 /.local && \
-    pip install -U pip poetry
+    pip install -U pip uv==0.5.14
 
 COPY pyproject.toml /run/pyproject.toml
-COPY poetry.lock /run/poetry.lock
+COPY uv.lock /run/uv.lock
+# needed for PDM build
+COPY README.md /run/README.md
 
-RUN poetry config virtualenvs.create false && \
-    poetry install --without dev
+RUN uv sync --frozen
 
 ENTRYPOINT ["python3", "-B", "-m", "app.main"]
 

@@ -1,0 +1,20 @@
+name: "Enforce Conventional Commit PR Title"
+
+on:
+  pull_request_target:
+    types:
+      - opened
+      - edited
+      - synchronize
+      - reopened
+      - labeled
+      - unlabeled
+
+jobs:
+  validate:
+    name: Validate PR Title
+    runs-on: ubuntu-latest
+    steps:
+      - uses: https://git.tainton.uk/actions/conventional-commits-check-action@v1.1.1
+        with:
+          commit-message: ${{ gitea.event.pull_request.title }}
