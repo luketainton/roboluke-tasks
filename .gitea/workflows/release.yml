@@ -29,7 +29,7 @@ jobs:
 
   # test:
   #   name: Unit Test
-  #   uses: https://git.tainton.uk/public/webexmemebot/.gitea/workflows/ci.yml@main
+  #   uses: https://git.tainton.uk/public/roboluke-tasks/.gitea/workflows/ci.yml@main
   #   continue-on-error: true
 
   create_release:
@@ -138,7 +138,7 @@ jobs:
         uses: docker/metadata-action@v5
         with:
           images: |
-            ghcr.io/${{ vars.GHCR_USERNAME }}/webexmemebot
+            ghcr.io/${{ vars.GHCR_USERNAME }}/roboluke-tasks
             ${{ vars.PACKAGES_REGISTRY_URL }}/${{ gitea.repository }}
           tags: type=semver,pattern=v{{version}},value=${{ needs.create_release.outputs.release_name }}
 
