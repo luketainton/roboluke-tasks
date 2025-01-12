@@ -6,6 +6,7 @@ on:
 
 jobs:
   test:
+    name: Test
     uses: https://git.tainton.uk/actions/gha-workflows/.gitea/workflows/ci-python-uv-with-docker.yml@main
     with:
       python-version: 3.13
@@ -15,6 +16,7 @@ jobs:
 
   create_release:
     name: Create Release
+    needs: test
     uses: https://git.tainton.uk/actions/gha-workflows/.gitea/workflows/create-release.yml@main
 
   create_docker:
