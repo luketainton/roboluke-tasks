@@ -24,7 +24,6 @@ jobs:
   create_docker:
     name: Create Docker Image
     needs: create_release
-    if: ${{ needs.create_release.outputs.success == 'true' }}
     uses: https://git.tainton.uk/actions/gha-workflows/.gitea/workflows/build-push-docker.yml@main
     with:
       release: ${{ needs.create_release.outputs.release_name }}
