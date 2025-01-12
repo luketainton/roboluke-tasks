@@ -26,8 +26,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: create_release
     steps:
-      - run: |
-          echo "Created release ${{ needs.create_release.outputs.release_name }}."
+      - run: echo "Created release ${{ needs.create_release.outputs.release_name }}."
 
   create_docker:
     name: Create Docker Image
