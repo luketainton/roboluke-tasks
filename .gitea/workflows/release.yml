@@ -20,13 +20,14 @@ jobs:
     uses: https://git.tainton.uk/actions/gha-workflows/.gitea/workflows/create-release.yml@main
     secrets:
       ACTIONS_TOKEN: ${{ secrets.ACTIONS_TOKEN }}
-  
+
   print_release:
     name: Print Release
     runs-on: ubuntu-latest
     needs: create_release
-    run: |
-      echo "Created release ${{ needs.create_release.outputs.release_name }}."
+    steps:
+      - run: |
+          echo "Created release ${{ needs.create_release.outputs.release_name }}."
 
   create_docker:
     name: Create Docker Image
