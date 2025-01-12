@@ -18,6 +18,8 @@ jobs:
     name: Create Release
     needs: test
     uses: https://git.tainton.uk/actions/gha-workflows/.gitea/workflows/create-release.yml@main
+    secrets:
+      ACTIONS_TOKEN: ${{ secrets.ACTIONS_TOKEN }}
 
   create_docker:
     name: Create Docker Image
@@ -26,3 +28,6 @@ jobs:
     uses: https://git.tainton.uk/actions/gha-workflows/.gitea/workflows/build-push-docker.yml@main
     with:
       release: ${{ needs.create_release.outputs.release_name }}
+    secrets:
+      ACTIONS_TOKEN: ${{ secrets.ACTIONS_TOKEN }}
+      GHCR_TOKEN: ${{ secrets.GHCR_TOKEN }}
