@@ -2,7 +2,7 @@ name: Build Docker
 on:
   release:
     types:
-      - released
+      - published
 
 jobs:
   create_docker:
