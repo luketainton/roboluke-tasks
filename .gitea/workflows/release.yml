@@ -27,13 +27,3 @@ jobs:
     needs: create_release
     steps:
       - run: echo "Created release ${{ needs.create_release.outputs.release_name }}."
-
-  create_docker:
-    name: Create Docker Image
-    needs: create_release
-    uses: https://git.tainton.uk/actions/gha-workflows/.gitea/workflows/build-push-docker.yml@main
-    with:
-      release: ${{ needs.create_release.outputs.release_name }}
-    secrets:
-      ACTIONS_TOKEN: ${{ secrets.ACTIONS_TOKEN }}
-      GHCR_TOKEN: ${{ secrets.GHCR_TOKEN }}
