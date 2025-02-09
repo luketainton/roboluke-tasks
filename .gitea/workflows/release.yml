@@ -7,11 +7,12 @@ on:
 jobs:
   test:
     name: Test
-    uses: https://git.tainton.uk/actions/gha-workflows/.gitea/workflows/ci-python-uv-with-docker.yml@main
+    uses: https://git.tainton.uk/repos/roboluke-tasks/.gitea/workflows/ci.yml@main
     with:
       python-version: 3.13
     secrets:
-      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      SONAR_HOST_URL: ${{ secrets.SONARQUBE_HOST_URL }}
+      SONAR_TOKEN: ${{ secrets.SONARQUBE_TOKEN }}
       SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
   create_release:
