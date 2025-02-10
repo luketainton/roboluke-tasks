@@ -7,7 +7,7 @@ on:
 jobs:
   test:
     name: Test
-    uses: https://git.tainton.uk/repos/roboluke-tasks/.gitea/workflows/ci.yml@main
+    uses: https://git.tainton.uk/repos/roboluke/.gitea/workflows/ci.yml@main
     with:
       python-version: 3.13
     secrets:
