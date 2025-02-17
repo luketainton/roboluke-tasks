@@ -1,6 +1,6 @@
 {
-  "assignAutomerge": true,
-  "assigneesFromCodeOwners": true,
+  "assignAutomerge": false,
+  "assigneesFromCodeOwners": false,
   "dependencyDashboardAutoclose": true,
   "extends": ["config:recommended"],
   "ignorePaths": ["**/.archive/**"],
