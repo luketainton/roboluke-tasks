@@ -4,7 +4,7 @@ import logging
 
 from webex_bot.models.command import Command
 from webex_bot.models.response import Response, response_from_adaptive_card
-from webexteamssdk.models.cards import (
+from webexpythonsdk.models.cards import (
     AdaptiveCard,
     Column,
     ColumnSet,
@@ -14,7 +14,7 @@ from webexteamssdk.models.cards import (
     Text,
     TextBlock,
 )
-from webexteamssdk.models.cards.actions import Submit
+from webexpythonsdk.models.cards.actions import Submit
 
 from app.utils.config import config
 from app.utils.n8n import get_tasks, submit_task
