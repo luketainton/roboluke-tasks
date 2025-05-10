@@ -2,18 +2,12 @@ name: Release
 on:
   workflow_dispatch:
   schedule:
-    - cron: "0 9 * * 0"
+    - cron: '0 9 * * 0'
 
 jobs:
   # test:
   #   name: Test
-  #   uses: https://git.tainton.uk/repos/roboluke/.gitea/workflows/ci.yml@main
-  #   with:
-  #     python-version: 3.13
-  #   secrets:
-  #     SONAR_HOST_URL: ${{ secrets.SONARQUBE_HOST_URL }}
-  #     SONAR_TOKEN: ${{ secrets.SONARQUBE_TOKEN }}
-  #     SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+  #   uses: https://git.tainton.uk/${{ gitea.repository }}/.gitea/workflows/ci.yml@main
 
   tag:
     name: Tag release
@@ -29,90 +23,26 @@ jobs:
     secrets:
       ACTIONS_TOKEN: ${{ secrets.ACTIONS_TOKEN }}
 
-  get_release_id:
-    name: Get Release ID
-    runs-on: ubuntu-latest
-    needs: [tag, create_release]
-    outputs:
-      releaseid: ${{ steps.getid.outputs.releaseid }}
-    steps:
-      - name: Get Release ID
-        id: getid
-        run: |
-          rid=$(curl -s -X 'GET' \
-          -H 'accept: application/json' \
-          '${{ gitea.server_url }}/api/v1/repos/${{ gitea.repository }}/releases/latest' | jq -r '.id')
-          echo "releaseid=$rid" >> "$GITEA_OUTPUT"
-          echo "$rid"
-
-  build_whl:
-    name: Build Wheel File
-    needs: [tag, get_release_id]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out repository code
-        uses: actions/checkout@v4.2.2
-        with:
-          ref: ${{ needs.tag.outputs.tag_name }}
-      # - name: Setup Python
-      #   uses: actions/setup-python@v5
-      #   with:
-      #     python-version: "3.13"
-      - name: Install uv
-        uses: astral-sh/setup-uv@v6
-        with:
-          enable-cache: true
-          cache-dependency-glob: "uv.lock"
-      - name: Set up Python
-        run: uv python install
-      - name: Update pyproject.toml
-        run: ./tools/update_pyproject.sh ${{ needs.tag.outputs.tag_name }}
-      - name: Install dependencies
-        run: uv sync
-      - name: Build wheel file
-        run: uv build
-      - name: Upload Release Asset
-        run: |
-          for file in dist/*.whl; do
-            curl -s -X POST \
-            -H "Authorization: token ${{ secrets.ACTIONS_TOKEN }}" \
-            -H "Content-Type: multipart/form-data" \
-            -F "attachment=@${{ gitea.workspace }}/$file" \
-            "${{ gitea.server_url }}/api/v1/repos/${{ gitea.repository }}/releases/${{ needs.get_release_id.outputs.releaseid }}/assets"
-          done
-      - name: Publish to PyPI
-        run: uv publish
-        env:
-          UV_PUBLISH_TOKEN: ${{ secrets.PYPI_API_TOKEN }}
-      # - name: Publish to PyPI
-      #   uses: pypa/gh-action-pypi-publish@release/v1
-      #   with:
-      #     # user: ${{ vars.PYPI_USERNAME }}
-      #     user: __token__
-      #     password: ${{ secrets.PYPI_API_TOKEN }}
-
-  # publish_pypi:
-  #   name: Publish to PyPI
-  #   needs: build_whl
+  # get_release_id:
+  #   name: Get Release ID
   #   runs-on: ubuntu-latest
+  #   needs: create_release
+  #   outputs:
+  #     releaseid: ${{ steps.getid.outputs.releaseid }}
   #   steps:
-  #     - name: Create dist folder
-  #       run: mkdir -p dist
-  #     - uses: actions/download-artifact@v4
-  #       with:
-  #         name: whl
-  #         path: dist
-  #     - name: Publish to PyPI
-  #       uses: pypa/gh-action-pypi-publish@release/v1
-  #       with:
-  #         # user: ${{ vars.PYPI_USERNAME }}
-  #         user: __token__
-  #         password: ${{ secrets.PYPI_API_TOKEN }}
+  #     - name: Get Release ID
+  #       id: getid
+  #       run: |
+  #         rid=$(curl -s -X 'GET' \
+  #         -H 'accept: application/json' \
+  #         '${{ gitea.server_url }}/api/v1/repos/${{ gitea.repository }}/releases/latest' | jq -r '.id')
+  #         echo "releaseid=$rid" >> "$GITEA_OUTPUT"
+  #         echo "$rid"
 
   create_docker:
     name: Publish Docker Images
     runs-on: ubuntu-latest
-    needs: tag
+    needs: create_release
     steps:
       - name: Update Docker configuration
         continue-on-error: true
