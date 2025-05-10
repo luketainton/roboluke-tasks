@@ -42,7 +42,7 @@ jobs:
   create_docker:
     name: Publish Docker Images
     runs-on: ubuntu-latest
-    needs: create_release
+    needs: [tag, create_release]
     steps:
       - name: Update Docker configuration
         continue-on-error: true
