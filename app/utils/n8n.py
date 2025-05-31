@@ -20,7 +20,7 @@ def __n8n_post(data: dict) -> bool:
         headers=headers,
         json=data,
         timeout=10,
-        verify=False,
+        verify=True,
     )
     return bool(resp.status_code == 200)
 
@@ -61,7 +61,7 @@ def get_tasks(requestor) -> bool:
         url=config.n8n_webhook_url,
         headers=headers,
         timeout=10,
-        verify=False,
+        verify=True,
         params={"requestor": requestor},
     )
     _data = bool(resp.status_code == 200)

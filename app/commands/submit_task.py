@@ -4,16 +4,8 @@ import logging
 
 from webex_bot.models.command import Command
 from webex_bot.models.response import Response, response_from_adaptive_card
-from webexpythonsdk.models.cards import (
-    AdaptiveCard,
-    Column,
-    ColumnSet,
-    Date,
-    FontSize,
-    FontWeight,
-    Text,
-    TextBlock,
-)
+from webexpythonsdk.models.cards import (AdaptiveCard, Column, ColumnSet, Date,
+                                         FontSize, FontWeight, Text, TextBlock)
 from webexpythonsdk.models.cards.actions import Submit
 
 from app.utils.config import config

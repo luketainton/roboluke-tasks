@@ -40,6 +40,9 @@ jobs:
 
       - name: Install dependencies
         run: uv sync
+      
+      - name: Check Import Sorting
+        run: uv run isort --check app/ tests/
 
       - name: Lint
         run: |
@@ -49,23 +52,44 @@ jobs:
       - name: Unit Test
         run: |
           uv run coverage run -m pytest -v --junitxml=testresults.xml
-          uv run coverage xml
-          sed -i 's@${{ gitea.workspace }}@/github/workspace@g' coverage.xml
+          uv run coverage report
+        # sed -i 's@${{ gitea.workspace }}@/github/workspace@g' coverage.xml
 
       - name: Minimize uv cache
         run: uv cache prune --ci
 
-      - name: SonarQube Scan
-        uses: SonarSource/sonarqube-scan-action@v5.2.0
-        env:
-          SONAR_HOST_URL: ${{ secrets.SONARQUBE_HOST_URL }}
-          SONAR_TOKEN: ${{ secrets.SONARQUBE_TOKEN }}
+      # - name: SonarQube Scan
+      #   uses: SonarSource/sonarqube-scan-action@v5.2.0
+      #   env:
+      #     SONAR_HOST_URL: ${{ secrets.SONARQUBE_HOST_URL }}
+      #     SONAR_TOKEN: ${{ secrets.SONARQUBE_TOKEN }}
 
-      - name: Snyk Vulnerability Scan
+      - name: Set up environment for Snyk
+        run: |
+          uv pip freeze > requirements.txt
+          mv pyproject.toml pyproject.toml.bak
+          mv uv.lock uv.lock.bak
+
+      - name: Snyk SAST Scan
         uses: snyk/actions/python@master
-        continue-on-error: true # Sometimes vulns aren't immediately fixable
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
-          command: snyk
-          args: test --all-projects
+          # command: snyk
+          args: snyk code test #--all-projects --exclude=.archive
+
+      # - name: Snyk Vulnerability Scan
+      #   uses: snyk/actions/python@master
+      #   continue-on-error: true # Sometimes vulns aren't immediately fixable
+      #   env:
+      #     SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      #     DEBUG: "*snyk*"
+      #   with:
+      #     # command: snyk
+      #     args: snyk test #--all-projects --exclude=.archive
+      
+      - name: Reverse set up environment for Snyk
+        run: |
+          rm -f requirements.txt
+          mv pyproject.toml.bak pyproject.toml
+          mv uv.lock.bak uv.lock
