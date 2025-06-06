@@ -8,7 +8,7 @@ authors = [
 ]
 requires-python = "<4.0,>=3.11"
 dependencies = [
-    "webex-bot<1.0.0,>=0.5.2",
+    "webex-bot<1.1.0,>=1.0.3",
     "datetime<6.0,>=5.5",
     "requests<3.0.0,>=2.32.3",
 ]
