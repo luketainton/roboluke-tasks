@@ -42,9 +42,14 @@ class Config:
         return os.environ["ADMIN_EMAIL"].split(",")
 
     @property
-    def n8n_webhook_url(self) -> str:
-        """Returns the n8n webhook URL."""
-        return os.environ["N8N_WEBHOOK_URL"]
+    def n8n_get_webhook_url(self) -> str:
+        """Returns the n8n GET webhook URL."""
+        return os.environ["N8N_GET_WEBHOOK_URL"]
+
+    @property
+    def n8n_post_webhook_url(self) -> str:
+        """Returns the n8n POST webhook URL."""
+        return os.environ["N8N_POST_WEBHOOK_URL"]
 
     @property
     def approved_users(self) -> list:

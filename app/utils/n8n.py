@@ -16,7 +16,7 @@ def __n8n_post(data: dict) -> bool:
     """
     headers: dict = {"Content-Type": "application/json"}
     resp: requests.Response = requests.post(
-        url=config.n8n_webhook_url,
+        url=config.n8n_post_webhook_url,
         headers=headers,
         json=data,
         timeout=10,
@@ -58,7 +58,7 @@ def get_tasks(requestor) -> bool:
     """
     headers: dict = {"Content-Type": "application/json"}
     resp: requests.Response = requests.get(
-        url=config.n8n_webhook_url,
+        url=config.n8n_get_webhook_url,
         headers=headers,
         timeout=10,
         verify=True,
