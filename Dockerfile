@@ -2,7 +2,7 @@ FROM python:3.14-slim
 LABEL maintainer="Luke Tainton <luke@tainton.uk>"
 USER root
 
-ENV PYTHONPATH="/run:/usr/local/lib/python3.11/lib-dynload:/usr/local/lib/python3.11/site-packages:/usr/local/lib/python3.11"
+ENV PYTHONPATH="/run:/usr/local/lib/python3.14/lib-dynload:/usr/local/lib/python3.14/site-packages:/usr/local/lib/python3.14"
 ENV UV_PROJECT_ENVIRONMENT="/usr/local/"
 
 WORKDIR /run
