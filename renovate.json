@@ -8,6 +8,9 @@
   "platformCommit": "enabled",
   "rebaseWhen": "behind-base-branch",
   "rollbackPrs": true,
+  "semanticCommits": "enabled",
+  "semanticCommitScope": "deps",
+  "semanticCommitType": "feat",
   "vulnerabilityAlerts": {
     "commitMessagePrefix": "[SECURITY] ",
     "enabled": true,
