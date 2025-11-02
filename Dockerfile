@@ -1,8 +1,8 @@
-FROM python:3.14-slim
+FROM python:3.13.9-slim
 LABEL maintainer="Luke Tainton <luke@tainton.uk>"
 USER root
 
-ENV PYTHONPATH="/run:/usr/local/lib/python3.14/lib-dynload:/usr/local/lib/python3.14/site-packages:/usr/local/lib/python3.14"
+ENV PYTHONPATH="/run:/usr/local/lib/python3.13/lib-dynload:/usr/local/lib/python3.13/site-packages:/usr/local/lib/python3.13"
 ENV UV_PROJECT_ENVIRONMENT="/usr/local/"
 
 WORKDIR /run
