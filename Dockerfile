@@ -9,7 +9,7 @@ WORKDIR /run
 
 RUN mkdir -p /.local && \
     chmod -R 777 /.local && \
-    pip install -U pip uv==0.5.14
+    pip install -U pip uv==0.9.21
 
 COPY pyproject.toml /run/pyproject.toml
 COPY uv.lock /run/uv.lock

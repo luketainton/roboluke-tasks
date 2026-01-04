@@ -3,5 +3,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    # Alternatively, use an image from a registry
+    # image: git.tainton.uk/repos/roboluke:latest
     restart: unless-stopped
     env_file: .env
